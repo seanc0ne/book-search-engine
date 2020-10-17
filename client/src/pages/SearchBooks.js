@@ -21,16 +21,17 @@ const SearchBooks = () => {
   // query me to extract bookIds from user's array of savedBooks
   const { data } = useQuery(GET_ME_BOOKS);
   const usersavedBooks = data?.me.savedBooks || [];
-  const [saveBook, { error }] = useMutation(SAVE_BOOK, {
-    update(cache, { data: { saveBook } }) {
-      // update me object's cache, appending saved book to the end of the array
-      const { me } = cache.readQuery({ query: GET_ME_BOOKS });
-      cache.writeQuery({
-        query: GET_ME_BOOKS,
-        data: { me: { ...me, savedBooks: [...me.savedBooks, saveBook] } },
-      });
-    },
-  });
+  // const [saveBook, { error }] = useMutation(SAVE_BOOK, {
+  //   update(cache, { data: { saveBook } }) {
+  //     // update me object's cache, appending saved book to the end of the array
+  //     const { me } = cache.readQuery({ query: GET_ME_BOOKS });
+  //     cache.writeQuery({
+  //       query: GET_ME_BOOKS,
+  //       data: { me: { ...me, savedBooks: [...me.savedBooks, saveBook] } },
+  //     });
+  //   },
+  // });
+  const [saveBook, { error }] = useMutation(SAVE_BOOK)
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -67,16 +68,18 @@ const SearchBooks = () => {
   const handleSaveBook = async (bookId) => {
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    console.log(bookToSave);
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
     if (!token) {
       return false;
     }
     try {
-      // const response = await saveBook(bookToSave, token);
-      await saveBook({
-        variables: { bookToSave },
+
+      const response = await saveBook({
+        variables: { newBook: bookToSave },
       });
+  
       isSaved(bookId);
       document.getElementById(bookId).innerHTML = 'SAVED';
       document.getElementById(bookId).disabled = true;
