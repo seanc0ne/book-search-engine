@@ -8,10 +8,10 @@ import {
 } from 'react-bootstrap';
 import Auth from '../utils/auth';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { GET_ME } from '../utils/queries';
+import { GET_ME_BOOKS } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 const SavedBooks = () => {
-  const { loading, data } = useQuery(GET_ME);
+  const { loading, data } = useQuery(GET_ME_BOOKS);
   const userData = data?.me || {};
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
   const handleDeleteBook = async (bookId) => {
