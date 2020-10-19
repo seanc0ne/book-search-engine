@@ -29,4 +29,4 @@ Submit a pull request if you would like to contribute.
 ## Questions
 Feel free to email me at seandoesitbetter@gmail.com with any questions.
 
-Check out my GitHub profile: [seanc0ne](https://www.github.com/seanc0ne)
+Check out my GitHub profile: [seanc0ne](https://www.github.com/seanc0ne) 
